@@ -1,0 +1,43 @@
+certifi==2021.10.8
+charset-normalizer==2.0.9
+click==8.0.3
+cycler==0.11.0
+diskcache==5.3.0
+fonttools==4.28.3
+girder-client==3.1.7
+h5py==3.6.0
+idna==3.3
+imageio==2.13.3
+joblib==1.1.0
+kiwisolver==1.3.2
+matplotlib==3.5.0
+networkx==2.6.3
+numpy==1.21.4
+olefile @ file:///home/conda/feedstock_root/build_artifacts/olefile_1602866521163/work
+opencv-python==4.5.4.60
+openslide-python @ file:///home/conda/feedstock_root/build_artifacts/openslide-python_1636629581446/work
+packaging==21.3
+pandas==1.3.4
+Pillow @ file:///home/conda/feedstock_root/build_artifacts/pillow_1636558800840/work
+pyparsing==3.0.6
+python-dateutil==2.8.2
+pytz==2021.3
+PyWavelets==1.2.0
+requests==2.26.0
+requests-toolbelt==0.9.1
+scikit-image==0.19.0
+scikit-learn==1.0.1
+scipy==1.7.3
+setuptools-scm==6.3.2
+six==1.16.0
+sklearn==0.0
+threadpoolctl==3.0.0
+tifffile==2021.11.2
+-e git+https://github.com/rwightman/pytorch-image-models.git@ccfeb06936549f19c453b7f1f27e8e632cfbe1c2#egg=timm
+tomli==1.2.2
+torch==1.10.0+cu113
+torchaudio==0.10.0+cu113
+torchvision==0.11.1+cu113
+tqdm==4.62.3
+typing_extensions==4.0.1
+urllib3==1.26.7
