@@ -14,7 +14,13 @@ For each cryosection whole slide image, we tiled it in 1000 by 1000 pixels with 
 
 ### Training
 * Vision transformers were trained using pytorch framework and timm (https://github.com/rwightman/pytorch-image-models).
+  Install all dependencies:
+  ``` shell
+  pip install -r requirements.txt
+  ```
 * CNNs were trained using tensorflow framework.
+
+
 
 
 ### Validation
