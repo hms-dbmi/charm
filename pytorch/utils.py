@@ -39,6 +39,120 @@ from torchvision import datasets, models, transforms
 from PIL import Image
 from matplotlib import pylab as plt
 
+class Meta_Dataset:
+    def __init__(self, task='CancerVsBenign',db = 'BWH',
+                 all_path='', seed=0,
+                 pt_lst_csv='',entire=False, set='train'):
+        self.task = task
+        self.db = db
+        self.all_path = all_path
+        self.pt_lst_csv = pt_lst_csv
+        self.seed = seed
+        self.entire = entire
+        self.set_name = set
+
+        self.get_pt_lst()
+
+    def get_pt_lst(self):  # read patient lists from CSV
+        CSV_PATH = self.pt_lst_csv + f"{self.task}_{self.db}_par{self.seed}.csv"
+        print("Reading {} SET from CSV: {}".format(self.set_name,CSV_PATH))
+        df = pd.read_csv(CSV_PATH)
+        self.target_pt = df[df['par'] == self.set_name]['Patient ID']
+
+    def get_data(self, pt_list):  # extract data from all-set using patient lists
+        h5file = h5py.File(self.all_path, "r")
+        entire_pts = h5file['pt_name'][()].astype(str)
+        if self.task == "cancerVsBenign":
+            if self.set_name != 'train' and self.db != 'BWH':
+                labels = h5file['GBMLabel'][()]
+            else:
+                labels = h5file['CancerLabel'][()]
+        elif self.task == 'LGGvsGBM':
+            labels = h5file['GBMLabel'][()]
+        elif self.task == 'IDHdetection_LGG' or self.task == 'IDHdetection_GBM':
+            labels = h5file['IDHLabel'][()]
+        elif self.task == 'TMBRegression_LGG' or self.task == 'TMBRegression_GBM':
+            labels = h5file['TMBClassLabel'][()]
+        elif self.task == 'MGMTdetection_LGG' or self.task == 'MGMTdetection_GBM':
+            labels = h5file['MGMTLabel'][()]
+        elif self.task == 'molClass':
+            labels = h5file['molClassLabel'][()]
+        elif self.task == 'molClass601' or self.task == 'molClass3':
+            labels = h5file['molClassLabel'][()]
+
+
+        index_list = []
+        img_embs = h5file['img']
+
+        # print(pt_list[:10])
+        for pt in pt_list:
+            idx = np.where(entire_pts == pt)[0]
+            index_list.extend(idx)
+        index_list = list(index_list)
+
+        img = []
+        for numb, a_idx in enumerate(index_list):
+            img.append(img_embs[a_idx])
+
+        label = labels[index_list]
+        pt_code = entire_pts[index_list]
+        img = np.array(img)
+
+        return img, label, pt_code
+
+    def create_Meta(self, sep=False):
+
+        data = dict()
+        print('reading data from separated h5 files by patients? {}'.format(sep))
+
+        if sep:
+            all_imgs = []
+            all_pas = []
+            all_labels = []
+
+            for pt in self.target_pt:
+                file = self.all_path + pt + '.h5'
+                h5file = h5py.File(file, "r")
+                all_imgs.append(np.array(h5file['img']))
+                all_pas.extend([pt] * len(h5file['img']))
+                all_labels.append(h5file['GBMLabel'][()])
+
+
+            data[f'{self.set_name}_img'] = np.concatenate((all_imgs), axis=0)
+            data[f'{self.set_name}_pt_name'] = np.array(all_pas)
+            data[f'{self.set_name}_label'] = np.concatenate((all_labels), axis=0)
+
+            print('Loading images done')
+
+            if self.task == "cancerVsBenign" and self.set_name =='test' and self.db == 'TCGA':
+
+                print('Testing TCGA as CanBe external set, assign all test labels to 1')
+
+                data[f'{self.set_name}_label'] = np.ones(data[f'{self.set_name}_label'].shape)
+
+
+        else:
+            if not self.entire:
+                print('Take a partition from the entire set')
+
+                data[f'{self.set_name}_img'], data[f'{self.set_name}_label'], data[f'{self.set_name}_pt_name'] = self.get_data(self.target_pt)
+            else:
+                print('Take the entire set')
+                h5file = h5py.File(self.all_path, "r")
+
+                if self.task == "cancerVsBenign":
+                    data['test_img'] = np.array(h5file['img'])
+                    print('entire image reading done...')
+                    data['test_pt_name'] = h5file['pt_name'][()].astype(str)
+
+                    if self.set !='train':
+                        data['test_label'] = [1]*len(h5file['pt_name'][()].astype(str))
+                    else:
+                        data['test_label'] = h5file['CancerLabel'][()]
+                    print('entire data reading done...')
+
+        return data
+
 class HDF5Dataset_Meta(Dataset):
 
     def __init__(self, path, set_name,seed,job='cancerVsBenign',db = 'BWH',entire=False,csv_path=None,pat_sep = False):
