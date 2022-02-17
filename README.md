@@ -5,7 +5,7 @@
 ## Pre-requisites:
 * Linux (Tested on Ubuntu 18.04)
 * NVIDIA GPU (Tested on Nvidia GeForce RTX 6000/8000/2080Ti)
-* Python (3.7).
+* Python (3.7+).
 * Check requirement.txt under pytorch and tf folders respectively for other dependences. 
 
 ### Data Preparation
