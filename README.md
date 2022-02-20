@@ -37,14 +37,14 @@ We saved all pathology images for each task in an h5 file. In the h5 files, tile
   ```
   
 * CNNs were built using TensorFlow 2.3.0.
-  #### example data
-    Example csv files for training and test the models, especially for running TMB regression, were placed in the tensorflow2 folder.
+  #### Example data
+    Example csv files for training and testing the models, especially for running TMB regression, were placed in the tensorflow2 folder.
   
-  #### data names and locations
+  #### Data names and locations
     All data was assumed to be placed under './data'. The hdf5 files storing images were assumed to be name as "{task_name}_{ds_name}.hdf5" where task_name could be 
     "cancerVsBenign", "LGGvsGBM", "IDHdetection", "molClass", or "TMBRegression". ds_name is the name of a dataset.
   
-  #### usage example
+  #### Usage example
     To run a CNN model, simply choose your target and subgroup, if any, and type
   ``` shell
   python main.py --dstrain 'TCGA' --target 'IDH' --subgroup 'LGG' --batch=128 --device=1 
