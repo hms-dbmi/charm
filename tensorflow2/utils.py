@@ -18,6 +18,7 @@ class Timer:
     def off(self):
         print("--- %s seconds ---" % (time.time() - self.start_time))
 
+        
 import os
 def create_folder():
     print("Creating new folders")
@@ -103,6 +104,7 @@ def generator(img, labels, batch_size):
             batch_start += batch_size   
             batch_end += batch_size
 
+            
 def create_tlie_head(lr_choice, no_class=2):
     inputs = Input(shape=(2048,))
     
@@ -120,6 +122,7 @@ def create_tlie_head(lr_choice, no_class=2):
     model = Model(inputs, x, name='decision_head')
     model.compile(optimizer=Adam(lr=lr_choice), loss=loss, metrics=met)
     return model
+
 
 def compute_class_weights(all_labels, configs):
     # note: use the number of patients might be better than the number of slides
@@ -251,7 +254,6 @@ def evaluation(y_true, y_pred, no_class=2, auc_type='micro', show=True):
     return auc_score, acc_score
 
     
-
 def computer_tmb_prob(model, data_dict, par, configs):
     df_tmb = []
     subgroup = configs['subgroup']
@@ -264,4 +266,4 @@ def computer_tmb_prob(model, data_dict, par, configs):
         df_tmb.append(df)
     df_final = pd.concat(df_tmb).reset_index(drop=True)
     df_final.to_csv(f'./data/TMB feature/TMB_{subgroup}_feature_par{par}.csv', index=False)
-
+   
