@@ -36,7 +36,21 @@ We saved all pathology images for each task in an h5 file. In the h5 files, tile
   python main.py --onlytest --model "SWIN" --batch=150 --outdim=2 --metric 'AUC' --namemarker "SWIN-224-Meta-csv-IDH-LGG-0" --modelpath /FINAL/IDH_LGG/0.0001_100_E200_ViT-Swin_CB_0.9999_class_AUC_1.0_noaug__nonconst_final-SWIN-224-Meta-csv-IDH-LGG-0.pt --path /processed_data/task3/IDHdetection_LGG_BP.hdf5 --csv /processed_data/par70_15_15/> logs/FINAL-CHECK/LGG-SWIN-IDH-BP-0-TEST.log 2>&1
   ```
   
-* CNNs were trained using the TensorFlow framework.
+* CNNs were built using TensorFlow 2.3.0.
+  #### example data
+    Example csv files for training and test the models, especially for running TMB regression, were placed in the tensorflow2 folder.
+  
+  #### data names and locations
+    All data was assumed to be placed under './data'. The hdf5 files storing images were assumed to be name as "{task_name}_{ds_name}.hdf5" where task_name could be 
+    "cancerVsBenign", "LGGvsGBM", "IDHdetection", "molClass", or "TMBRegression". ds_name is the name of a dataset.
+  
+  #### usage example
+    To run a CNN model, simply choose your target and subgroup, if any, and type
+  ``` shell
+  python main.py --dstrain 'TCGA' --target 'IDH' --subgroup 'LGG' --batch=128 --device=1 
+  ```
+
+
 
 ### Issues
 ### License 
