@@ -7,7 +7,7 @@ Machine Learning for Cryosection Pathology Predicts the 2021 WHO Classification 
 ## Pre-requisites:
 * Linux (Tested on Ubuntu 18.04)
 * NVIDIA GPU (Tested on Nvidia GeForce RTX 6000/8000/2080Ti)
-* Python (3.7+).
+* Python (3.7+), TensorFlow (2.3.0).
 * Cuda 10.2
 * Check requirement.txt under pytorch and tf folders respectively for other dependencies. 
 
@@ -29,7 +29,7 @@ We saved all pathology images for each task in an h5 file. In the h5 files, tile
   *-- model: e.g. 'SWIN' ---> swin transformer  
   *-- namemarker:  {model name}-Meta-csv-{task name}-{dataset name}-{partition csv ID}. e.g. 'SWIN-Meta-csv-IDH-LGG-0'
   ``` shell
-  python main.py --device=8 --loss "CB" --model "SWIN" --outdim=2 --batch=100 --lr=0.001 --metric 'AUC' --namemarker "SWIN-622-Meta-csv-IDH-LGG-0" --optimizer 'sgd' --end-epoch=10 --savekey /FINAL/IDH_LGG/ --csv /partitions/par70_15_15/ --path /processed_data/task3/IDHdetection_LGG_BP.hdf5> logs/FINAL-CHECK/LGG-0.log 2>&1
+  python main.py --device=8 --loss "CE" --model "SWIN" --outdim=2 --batch=100 --lr=0.001 --metric 'AUC' --namemarker "SWIN-622-Meta-csv-IDH-LGG-0" --optimizer 'sgd' --end-epoch=10 --savekey /FINAL/IDH_LGG/ --csv /partitions/par70_15_15/ --path /processed_data/task3/IDHdetection_LGG_BP.hdf5> logs/FINAL-CHECK/LGG-0.log 2>&1
   ```
    ##### Testing
      ``` shell
@@ -49,6 +49,17 @@ We saved all pathology images for each task in an h5 file. In the h5 files, tile
   ``` shell
   python main.py --dstrain 'TCGA' --target 'IDH' --subgroup 'LGG' --batch=128 --device=1 
   ```
+
+ #### Public models trained on TCGA
+We published our models trained on TCGA partitions for each task. 
+
+##### TCGA data portal
+https://portal.gdc.cancer.gov/
+
+(note: the models for "cancerVsBenign" was trained BWH dataset. Due to the confidentiality, the associated dataset is not public.)
+https://www.dropbox.com/sh/g2c1cl29brrqiul/AAAtB1wbd6txTH99Gw8J_xIXa?dl=0
+
+
 
 
 
