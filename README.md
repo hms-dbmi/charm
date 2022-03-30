@@ -1,5 +1,6 @@
-# CHARM: Cryosection Histopathology Assessment and Review Machine (TBD) 
-Machine Learning for Cryosection Pathology Predicts the 2021 WHO Classification of Glioma (in preparation)
+# CHARM: Cryosection Histopathology Assessment and Review Machine
+Machine Learning for Cryosection Pathology Predicts the 2021 WHO Classification of Glioma
+
 
 ![](figures/charm-workflow.png)
 
