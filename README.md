@@ -1,6 +1,7 @@
 # CHARM: Cryosection Histopathology Assessment and Review Machine
-Machine Learning for Cryosection Pathology Predicts the 2021 WHO Classification of Glioma
+Machine Learning for Cryosection Pathology Predicts the 2021 WHO Classification of Glioma (under review)
 
+Solving the challenge of real-time, intra-operative pathology diagnoses.
 
 ![](figures/charm-workflow.png)
 
