@@ -3,8 +3,7 @@ Nasrallah MP et al. Machine Learning for Cryosection Pathology Predicts the 2021
 
 Solving the challenge of real-time, intra-operative pathology diagnoses.
 
-![MED-REVISION-GRAPHIC-COVER](https://user-images.githubusercontent.com/31292151/234607604-d4d21f67-0896-4ceb-9d7f-d32af9422f2a.png)
-
+![GraphicalAbstract](https://github.com/hms-dbmi/charm/assets/31292151/fff6fdbc-1291-4209-bb12-3b0508b026a9)
 
 
 ## Pre-requisites:
